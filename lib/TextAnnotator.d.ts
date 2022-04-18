@@ -6,7 +6,6 @@ interface TextSpan extends Span {
 declare type TextBaseProps<T> = {
     content: string;
     value: T[];
-    onChange: (value: T[]) => any;
     getSpan?: (span: TextSpan) => T;
 };
 declare type TextAnnotatorProps<T> = React.HTMLAttributes<HTMLDivElement> & TextBaseProps<T>;

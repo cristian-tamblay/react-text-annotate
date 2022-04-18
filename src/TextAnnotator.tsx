@@ -11,7 +11,6 @@ const Split = props => {
     <span
       data-start={props.start}
       data-end={props.end}
-      onClick={() => props.onClick({start: props.start, end: props.end})}
     >
       {props.content}
     </span>
@@ -25,7 +24,6 @@ interface TextSpan extends Span {
 type TextBaseProps<T> = {
   content: string
   value: T[]
-  onChange: (value: T[]) => any
   getSpan?: (span: TextSpan) => T
   // TODO: determine whether to overwrite or leave intersecting ranges.
 }
@@ -39,43 +37,12 @@ const TextAnnotator = <T extends Span>(props: TextAnnotatorProps<T>) => {
     return {start: span.start, end: span.end} as T
   }
 
-  const handleMouseUp = () => {
-    if (!props.onChange) return
-
-    const selection = window.getSelection()
-
-    if (selectionIsEmpty(selection)) return
-
-    let start =
-      parseInt(selection.anchorNode.parentElement.getAttribute('data-start'), 10) +
-      selection.anchorOffset
-    let end =
-      parseInt(selection.focusNode.parentElement.getAttribute('data-start'), 10) +
-      selection.focusOffset
-
-    if (selectionIsBackwards(selection)) {
-      ;[start, end] = [end, start]
-    }
-
-    props.onChange([...props.value, getSpan({start, end, text: content.slice(start, end)})])
-
-    window.getSelection().empty()
-  }
-
-  const handleSplitClick = ({start, end}) => {
-    // Find and remove the matching split.
-    const splitIndex = props.value.findIndex(s => s.start === start && s.end === end)
-    if (splitIndex >= 0) {
-      props.onChange([...props.value.slice(0, splitIndex), ...props.value.slice(splitIndex + 1)])
-    }
-  }
-
   const {content, value, style} = props
   const splits = splitWithOffsets(content, value)
   return (
-    <div style={style} onMouseUp={handleMouseUp}>
+    <div style={style}>
       {splits.map(split => (
-        <Split key={`${split.start}-${split.end}`} {...split} onClick={handleSplitClick} />
+        <Split key={`${split.start}-${split.end}`} {...split}/>
       ))}
     </div>
   )
