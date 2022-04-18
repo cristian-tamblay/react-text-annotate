@@ -12,7 +12,7 @@ export interface MarkProps {
 }
 
 const Mark: React.SFC<MarkProps> = props => (
-(props.tooltip !== undefined) ?
+(props.tooltip !== "") ?
 <Tooltip title={props.tooltip} arrow>
   <mark
     style={{backgroundColor: props.color || '#84d2ff', padding: '0 4px'}}
