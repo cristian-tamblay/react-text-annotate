@@ -5,7 +5,7 @@ export interface MarkProps {
     start: number;
     end: number;
     tag: string;
-    tooltip: string;
+    tooltip?: string;
     color?: string;
 }
 declare const Mark: React.SFC<MarkProps>;
