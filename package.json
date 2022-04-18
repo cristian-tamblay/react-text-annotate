@@ -5,7 +5,10 @@
   "types": "./lib/index.d.ts",
   "homepage": "https://mcamac.github.io/react-text-annotate",
   "dependencies": {
-    "lodash.sortby": "^4.7.0"
+    "@mui/material": "^5.6.1",
+    "install": "^0.13.0",
+    "lodash.sortby": "^4.7.0",
+    "npm": "^8.7.0"
   },
   "peerDependencies": {
     "react": "^16.8.0",
